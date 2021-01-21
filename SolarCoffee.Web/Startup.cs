@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
+using SolarCoffee.Data;
 
 namespace SolarCoffee.Web
 {
@@ -28,6 +31,14 @@ namespace SolarCoffee.Web
         {
 
             services.AddControllers();
+
+            services.AddDbContext<SolarDbContext>(
+                opts =>
+                {
+                    opts.EnableDetailedErrors();
+                    opts.UseNpgsql(Configuration.GetConnectionString("solar.dev"));
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SolarCoffee.Web", Version = "v1" });
