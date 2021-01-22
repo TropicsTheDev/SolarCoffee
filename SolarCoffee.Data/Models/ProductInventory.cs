@@ -2,13 +2,13 @@ using System;
 
 namespace SolarCoffee.Data.Models
 {
-    public class Customer
+    public class ProductInventory
     {
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public CustomerAddress PrimaryAddress { get; set; }
+          public int QuantityOnHand { get; set; }
+        public int IdealQuantity { get; set; }
+        public Product Product { get; set; }
     }
 }

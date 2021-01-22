@@ -1,8 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SolarCoffee.Data.Models {
-    public class CustomerAddress {
+namespace SolarCoffee.Data.Models
+{
+    public class CustomerAddress
+    {
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
@@ -25,5 +27,5 @@ namespace SolarCoffee.Data.Models {
         [MaxLength(32)]
         public string Country { get; set; }
     }
-    
+
 }
