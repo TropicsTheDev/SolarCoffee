@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using SolarCoffee.Data;
+using SolarCoffee.Services.Product;
 
 namespace SolarCoffee.Web
 {
@@ -38,6 +39,7 @@ namespace SolarCoffee.Web
                     opts.EnableDetailedErrors();
                     opts.UseNpgsql(Configuration.GetConnectionString("solar.dev"));
                 });
+            services.AddTransient<IProductService, ProductService>();
 
             services.AddSwaggerGen(c =>
             {
