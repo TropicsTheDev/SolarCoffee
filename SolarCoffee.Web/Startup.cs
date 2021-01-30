@@ -15,6 +15,9 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using SolarCoffee.Data;
 using SolarCoffee.Services.Product;
+using SolarCoffee.Services.Customer;
+using SolarCoffee.Services.Order;
+using SolarCoffee.Services.Inventory;
 
 namespace SolarCoffee.Web
 {
@@ -40,6 +43,9 @@ namespace SolarCoffee.Web
                     opts.UseNpgsql(Configuration.GetConnectionString("solar.dev"));
                 });
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IInventoryService, InventoryService>();
 
             services.AddSwaggerGen(c =>
             {

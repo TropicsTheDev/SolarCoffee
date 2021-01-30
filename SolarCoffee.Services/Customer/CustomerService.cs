@@ -6,12 +6,12 @@ using SolarCoffee.Data;
 
 namespace SolarCoffee.Services.Customer
 {
-    public class CusomterService : ICustomerService
+    public class CustomerService : ICustomerService
     {
 
         private readonly SolarDbContext _db;
 
-        public CusomterService(SolarDbContext dbContext)
+        public CustomerService(SolarDbContext dbContext)
         {
             _db = dbContext;
         }

@@ -17,17 +17,13 @@ namespace SolarCoffee.Services.Inventory
         public InventoryService(SolarDbContext dbContext, ILogger<InventoryService> logger)
         {
             _db = dbContext;
-            _logger  = logger;
+            _logger = logger;
         }
 
-        public void CreateSnapshot()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public ProductInventory GetByProductId(int productId)
         {
-            throw new System.NotImplementedException();
+            return _db.ProductInventories.Include(pi => pi.Product).FirstOrDefault(pi => pi.Product.Id == productId);
         }
 
         // Returns all inventory from the db.
@@ -36,9 +32,11 @@ namespace SolarCoffee.Services.Inventory
             return _db.ProductInventories.Include(pi => pi.Product).Where(pi => !pi.Product.IsArchived).ToList();
         }
 
+        // Returns snapshot history for previous 6 hours
         public List<ProductInventorySnapshot> GetSnapshotHistory()
         {
-            throw new System.NotImplementedException();
+            var earliest = DateTime.UtcNow - TimeSpan.FromHours(6);
+            return _db.ProductInventorySnapshots.Include(snap => snap.Product).Where(snap => snap.SnapshotTime > earliest && !snap.Product.IsArchived).ToList();
         }
 
         // Updates number of available units
@@ -54,17 +52,18 @@ namespace SolarCoffee.Services.Inventory
 
                 try
                 {
-                    CreateSnapshot();
+                    CreateSnapshot(inventory);
                 }
                 catch (Exception e)
                 {
-                     _logger.LogError("Error creating snapshot");
-                     _logger.LogError(e.StackTrace);
+                    _logger.LogError("Error creating snapshot");
+                    _logger.LogError(e.StackTrace);
                 }
 
                 _db.SaveChanges();
 
-                return new ServiceResponse<ProductInventory> {
+                return new ServiceResponse<ProductInventory>
+                {
                     IsSuccess = true,
                     Data = inventory,
                     Message = $"Product {id} iventory adjusted",
@@ -73,13 +72,29 @@ namespace SolarCoffee.Services.Inventory
             }
             catch (Exception e)
             {
-                 return new ServiceResponse<ProductInventory> {
-                     IsSuccess = true,
-                     Data = null,
-                     Message = "Error Updating Quantity On Hand",
-                     Time = now
-                 };
+                return new ServiceResponse<ProductInventory>
+                {
+                    IsSuccess = true,
+                    Data = null,
+                    Message = "Error Updating Quantity On Hand",
+                    Time = now
+                };
             }
+        }
+
+        private void CreateSnapshot(ProductInventory inventory)
+        {
+            var now = DateTime.UtcNow;
+
+            var snapshot = new ProductInventorySnapshot
+            {
+                SnapshotTime = now,
+                Product = inventory.Product,
+                QuantityOnHand = inventory.QuantityOnHand
+            };
+
+            _db.Add(snapshot);
+
         }
     }
 }
