@@ -2,8 +2,8 @@
   <div class="side-menu-container">
     <router-link to="/">
       <img
-        id="imagLogo"
-        src="../assets/images/solar_coffee_logo.png"
+        id="imgLogo"
+        src="@/assets/images/solar_coffee_logo.png"
         alt="Solar Coffee Logo"
       />
     </router-link>

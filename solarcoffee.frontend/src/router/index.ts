@@ -7,15 +7,15 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    name: "home",
+    path: '/',
+    name: 'home',
     component: Inventory
   },
   {
-    path: "/",
-    name: "home",
+    path: '/inventory',
+    name: 'inventory',
     component: Inventory
-  }
+  },
 ]
 
 const router = new VueRouter({

@@ -4,40 +4,30 @@
     <template v-slot:body>
       <ul class="new-product">
         <li>
-          <label for="isTaxable">Is this Product taxable?</label>
+          <label for="isTaxable">Is this product taxable?</label>
           <input
             type="checkbox"
-            name=""
             id="isTaxable"
             v-model="newProduct.isTaxable"
           />
         </li>
         <li>
           <label for="productName">Name</label>
-          <input
-            type="text"
-            name=""
-            id="productName"
-            v-model="newProduct.name"
-          />
+          <input type="text" id="productName" v-model="newProduct.name" />
         </li>
+
         <li>
           <label for="productDesc">Description</label>
           <input
             type="text"
-            name=""
             id="productDesc"
             v-model="newProduct.description"
           />
         </li>
+
         <li>
-          <label for="isTaxable">Price</label>
-          <input
-            type="checkbox"
-            name=""
-            id="productPrice"
-            v-model="newProduct.price"
-          />
+          <label for="productPrice">Price (USD)</label>
+          <input type="number" id="productPrice" v-model="newProduct.price" />
         </li>
       </ul>
     </template>
@@ -87,7 +77,7 @@ export default class NewProductModal extends Vue {
 </script>
 
 <style scoped lang="scss">
-.newProduct {
+.new-product {
   list-style: none;
   padding: 0;
   margin: 0;
