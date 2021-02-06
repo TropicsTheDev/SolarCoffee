@@ -17,8 +17,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
   components: {},
 })
 export default class SolarButton extends Vue {
-  @Prop({ required: false, type: String})
-  link?: string;
+  @Prop({ required: false, type: Boolean, default: false })
+  disabled?: string;
 
   @Prop({ required: false, type: Boolean, default: false })
   isFullWidth?: boolean;
