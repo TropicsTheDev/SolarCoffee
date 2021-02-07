@@ -58,6 +58,7 @@ import { IProduct, IProductInventory } from "../types/Product";
 import SolarButton from "@/components/SolarButton.vue";
 import NewProductModal from "@/components/modals/NewProductModal.vue";
 import ShipmentModal from "@/components/modals/ShipmentModal.vue";
+import InventoryChart from "@/components/charts/InventoryChart.vue";
 import { IShipment } from "@/types/Shipment";
 import { InventoryService } from "@/services/inventory-service";
 import { ProductService } from "@/services/product-service";
@@ -67,7 +68,7 @@ const productService = new ProductService();
 
 @Component({
   name: "Inventory",
-  components: { SolarButton, NewProductModal, ShipmentModal },
+  components: { SolarButton, NewProductModal, ShipmentModal, InventoryChart },
 })
 export default class extends Vue {
   isNewProductVisible: boolean = false;
@@ -117,6 +118,7 @@ export default class extends Vue {
 
   async initialize() {
     this.inventory = await inventoryService.getInventory();
+    await this.$store.dispatch("assignSnapshots");
   }
 
   async created() {
